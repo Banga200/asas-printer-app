@@ -1,0 +1,10 @@
+# Nuxt dev/build outputs
+
+dist
+# Node dependencies
+node_modules
+
+.idea
+
+# Local env files
+.env

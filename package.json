@@ -1,0 +1,45 @@
+{
+  "name": "electron-print-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "multer": "^2.0.1"
+  },
+  "build": {
+    "appId": "com.asas-pc.printservice",
+     "mac": {
+    "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    },
+    "win": {
+      "target": "nsis"
+    },
+     "files": [
+      "**/*",
+      "SumatraPDF.exe"     
+    ],
+    "asarUnpack": [
+      "SumatraPDF.exe"    
+    ]
+  },
+  "devDependencies": {
+    "electron": "^37.2.5",
+    "electron-builder": "^26.0.12",
+    "electron-packager": "^17.1.2",
+    "electron-rebuild": "^3.2.9"
+  }
+}
