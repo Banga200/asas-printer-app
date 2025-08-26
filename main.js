@@ -1,6 +1,7 @@
 const { app, Tray, Menu, ipcMain } = require('electron');
 const path = require('path');
 const { startExpressServer } = require('./print-server'); // ← Your Express API
+  require('dotenv').config();
 
 let tray = null;
 
@@ -8,9 +9,10 @@ app.whenReady().then(() => {
   startExpressServer(); // Start the print server
 
   tray = new Tray(path.join(__dirname, 'icon.png'));
-
+  let Port = process.env.PORT || 3001
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Printer Server is running', enabled: false },
+    { label: 'Port:' + Port, enabled: false },
     { type: 'separator' },
     { label: 'Quit', click: () => app.quit() }
   ]);

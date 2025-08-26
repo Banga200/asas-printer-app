@@ -30,7 +30,8 @@
     },
      "files": [
       "**/*",
-      "SumatraPDF.exe"     
+      "SumatraPDF.exe",
+      ".env"     
     ],
     "asarUnpack": [
       "SumatraPDF.exe"    

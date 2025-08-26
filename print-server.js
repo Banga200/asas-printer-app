@@ -6,16 +6,16 @@ const path = require('path');
 const fs = require('fs');
 const { exec, execFile, execSync } = require('child_process');
 
-const app = express();
+const server = express();
 const cors = require('cors');
-app.use(cors());
+server.use(cors());
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
-const AUTH_TOKEN = process.env.AUTH_TOKEN; //
+const AUTH_TOKEN = process.env.AUTH_TOKEN || 'p9$Xv!2qLr@8Zc#4TgF7^mWbEoJk1sHn'; //
 const UPLOAD_DIR = path.join(__dirname, 'uploads');
 const MAX_FILE_AGE_MS = 5 * 60 * 1000; // 5 minutes
 
 // Middleware: Token verification
-app.use((req, res, next) => {
+server.use((req, res, next) => {
   const authHeader = req.headers.authorization || '';
   const token = authHeader.replace('Bearer ', '');
 
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 });
 
 // 🖨 GET /printers
-app.get('/printers', (req, res) => {
+server.get('/printers', (req, res) => {
   const platform = process.platform;
   if (platform === 'win32') {
     exec('wmic printer get Name,Default,Status', (err, stdout) => {
@@ -80,14 +80,14 @@ app.get('/printers', (req, res) => {
 });
 
 // 📥 POST /print
-app.post('/print', upload.single('file'), (req, res) => {
+server.post('/print', upload.single('file'), (req, res) => {
   const filePath = req.file?.path;
   let {
     printer = null,
     copies = 1,
     duplex = false,
     pageRange = null,
-  } = req.body;
+  } = req.query;
 
   if (!filePath) return res.status(400).json({ error: 'No file uploaded' });
 
@@ -102,7 +102,7 @@ app.post('/print', upload.single('file'), (req, res) => {
   }
 
   if (platform === 'win32') {
-    const isDev = !app.isPackaged;
+    const isDev = !server.isPackaged;
     const basePath = isDev ? __dirname : path.join(process.resourcesPath);
     const sumatraPath = path.join(basePath, 'SumatraPDF.exe');
     if (!fs.existsSync(sumatraPath)) {
@@ -196,7 +196,7 @@ setInterval(() => {
 
 // Start server
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Print server running on http://localhost:${PORT}`);
 });
 
