@@ -8,7 +8,7 @@ let tray = null;
 app.whenReady().then(() => {
   startExpressServer(); // Start the print server
 
-  tray = new Tray(path.join(__dirname, 'icon.png'));
+  tray = new Tray(path.join(__dirname, 'icon.ico'));
   let Port = process.env.PORT || 3001
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Printer Server is running', enabled: false },
