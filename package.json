@@ -24,44 +24,42 @@
     "electron-rebuild": "^3.2.9"
   },
   "build": {
-    "appId": "com.asas-pc.printservice",
-    "productName": "Asas Printers Service",
-    "files": [
-      "**/*",
-      "SumatraPDF.exe",
-      "icon.ico",
-      ".env"
-    ],
-    "extraResources": [
-      {
-        "from": "SumatraPDF.exe",
-        "to": "SumatraPDF.exe"
-      },
-      {
-        "from": "SumatraPDF-settings.txt",
-        "to": "SumatraPDF-settings.txt"
-      },
-      {
-        "from": "icon.ico",
-        "to": "icon.ico"
-      }
-    ],
-    "asarUnpack": [
-      "SumatraPDF.exe"
-    ],
-    "win": {
-      "target": "nsis",
-      "icon": "icon.ico"
+  "appId": "com.asas-pc.printservice",
+  "productName": "Asas Printers Service",
+  "files": [
+    "**/*",
+    "!SumatraPDF.exe",
+    "icon.ico",
+    ".env"
+  ],
+  "extraResources": [
+    {
+      "from": "SumatraPDF.exe",
+      "to": "SumatraPDF.exe"
     },
-    "nsis": {
-      "oneClick": false,
-      "perMachine": true,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "shortcutName": "Asas Printers Service",
-      "runAfterFinish": true,
-      "artifactName": "${productName}-Installer-${version}.exe"
+    {
+      "from": "SumatraPDF-settings.txt",
+      "to": "SumatraPDF-settings.txt"
+    },
+    {
+      "from": "icon.ico",
+      "to": "icon.ico"
     }
+  ],
+  "asarUnpack": [],
+  "win": {
+    "target": "nsis",
+    "icon": "icon.ico"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": true,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "Asas Printers Service",
+    "runAfterFinish": true,
+    "artifactName": "${productName}-Installer-${version}.exe"
   }
+}
 }

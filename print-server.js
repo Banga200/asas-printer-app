@@ -108,9 +108,11 @@ server.post('/print', upload.single('file'), (req, res) => {
   }
 
   if (platform === 'win32') {
-    const isDev = !server.isPackaged;
-    const basePath = isDev ? __dirname : path.join(process.resourcesPath);
-    const sumatraPath = path.join(basePath, 'SumatraPDF.exe');
+    const isDev = !app.isPackaged; // ✅ correct check
+    const sumatraPath = isDev
+    ? path.join(__dirname, 'SumatraPDF.exe') // for dev
+    : path.join(process.resourcesPath, 'SumatraPDF.exe'); 
+   
     if (!fs.existsSync(sumatraPath)) {
       return res.status(500).json({ error: 'SumatraPDF.exe not found' });
     }
