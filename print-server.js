@@ -9,9 +9,15 @@ const { exec, execFile, execSync } = require('child_process');
 const server = express();
 const cors = require('cors');
 server.use(cors());
-const upload = multer({ dest: path.join(__dirname, 'uploads') });
+const { app } = require('electron');
+const UPLOAD_DIR = path.join(app.getPath('userData'), 'uploads');
+
+if (!fs.existsSync(UPLOAD_DIR)) {
+  fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+}
+
+const upload = multer({ dest: UPLOAD_DIR });
 const AUTH_TOKEN = process.env.AUTH_TOKEN || 'p9$Xv!2qLr@8Zc#4TgF7^mWbEoJk1sHn'; //
-const UPLOAD_DIR = path.join(__dirname, 'uploads');
 const MAX_FILE_AGE_MS = 5 * 60 * 1000; // 5 minutes
 
 // Middleware: Token verification
